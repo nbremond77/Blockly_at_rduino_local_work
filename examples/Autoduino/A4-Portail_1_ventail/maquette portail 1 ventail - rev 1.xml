@@ -1,0 +1,272 @@
+<xml xmlns="http://www.w3.org/1999/xhtml">
+  <block type="procedures_defnoreturn" x="913" y="37">
+    <field name="NAME">faire clignoter le témoin</field>
+    <statement name="STACK">
+      <block type="math_change">
+        <field name="VAR">compteurClignot</field>
+        <value name="DELTA">
+          <shadow type="math_number">
+            <field name="NUM">1</field>
+          </shadow>
+          <block type="variables_set_type">
+            <field name="VARIABLE_SETTYPE_TYPE">NUMBER</field>
+            <value name="VARIABLE_SETTYPE_INPUT">
+              <block type="math_number">
+                <field name="NUM">1</field>
+              </block>
+            </value>
+          </block>
+        </value>
+        <next>
+          <block type="controls_if">
+            <mutation elseif="1" else="1"></mutation>
+            <value name="IF0">
+              <block type="logic_compare">
+                <field name="OP">LT</field>
+                <value name="A">
+                  <block type="variables_get">
+                    <field name="VAR">compteurClignot</field>
+                  </block>
+                </value>
+                <value name="B">
+                  <block type="variables_set_type">
+                    <field name="VARIABLE_SETTYPE_TYPE">NUMBER</field>
+                    <value name="VARIABLE_SETTYPE_INPUT">
+                      <block type="math_number">
+                        <field name="NUM">100</field>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+              </block>
+            </value>
+            <statement name="DO0">
+              <block type="autoduino_led">
+                <field name="PIN">7</field>
+                <field name="STAT">0</field>
+              </block>
+            </statement>
+            <value name="IF1">
+              <block type="logic_compare">
+                <field name="OP">LT</field>
+                <value name="A">
+                  <block type="variables_get">
+                    <field name="VAR">compteurClignot</field>
+                  </block>
+                </value>
+                <value name="B">
+                  <block type="variables_set_type">
+                    <field name="VARIABLE_SETTYPE_TYPE">NUMBER</field>
+                    <value name="VARIABLE_SETTYPE_INPUT">
+                      <block type="math_number">
+                        <field name="NUM">120</field>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+              </block>
+            </value>
+            <statement name="DO1">
+              <block type="autoduino_led">
+                <field name="PIN">7</field>
+                <field name="STAT">1</field>
+              </block>
+            </statement>
+            <statement name="ELSE">
+              <block type="variables_set">
+                <field name="VAR">compteurClignot</field>
+                <value name="VALUE">
+                  <block type="variables_set_type">
+                    <field name="VARIABLE_SETTYPE_TYPE">NUMBER</field>
+                    <value name="VARIABLE_SETTYPE_INPUT">
+                      <block type="math_number">
+                        <field name="NUM">0</field>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+              </block>
+            </statement>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+  <block type="base_setup_loop" x="213" y="87">
+    <statement name="DO">
+      <block type="variables_set">
+        <field name="VAR">cpt</field>
+        <value name="VALUE">
+          <block type="variables_set_type">
+            <field name="VARIABLE_SETTYPE_TYPE">NUMBER</field>
+            <value name="VARIABLE_SETTYPE_INPUT">
+              <block type="math_number">
+                <field name="NUM">0</field>
+              </block>
+            </value>
+          </block>
+        </value>
+        <next>
+          <block type="variables_set">
+            <field name="VAR">compteurClignot</field>
+            <value name="VALUE">
+              <block type="variables_set_type">
+                <field name="VARIABLE_SETTYPE_TYPE">NUMBER</field>
+                <value name="VARIABLE_SETTYPE_INPUT">
+                  <block type="math_number">
+                    <field name="NUM">0</field>
+                  </block>
+                </value>
+              </block>
+            </value>
+            <next>
+              <block type="variables_set">
+                <field name="VAR">compteurBuzzer</field>
+                <value name="VALUE">
+                  <block type="variables_set_type">
+                    <field name="VARIABLE_SETTYPE_TYPE">NUMBER</field>
+                    <value name="VARIABLE_SETTYPE_INPUT">
+                      <block type="math_number">
+                        <field name="NUM">0</field>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+                <next>
+                  <block type="serial_init">
+                    <field name="SPEED">9600</field>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+    <statement name="LOOP">
+      <block type="controls_if">
+        <comment pinned="false" h="80" w="160">Ouverture</comment>
+        <value name="IF0">
+          <block type="logic_compare">
+            <field name="OP">NEQ</field>
+            <value name="A">
+              <block type="autoduino_ils_switch">
+                <field name="PIN">A2</field>
+              </block>
+            </value>
+            <value name="B">
+              <block type="math_number">
+                <field name="NUM">1</field>
+              </block>
+            </value>
+          </block>
+        </value>
+        <statement name="DO0">
+          <block type="autoduino_motor">
+            <field name="DIRECTION">forward</field>
+            <field name="PIN1">42</field>
+            <field name="PIN2">43</field>
+          </block>
+        </statement>
+        <next>
+          <block type="base_delay">
+            <value name="DELAY_TIME">
+              <shadow type="math_number">
+                <field name="NUM">1000</field>
+              </shadow>
+              <block type="math_number">
+                <field name="NUM">10</field>
+              </block>
+            </value>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+  <block type="procedures_defnoreturn" x="913" y="537">
+    <field name="NAME">faire sonner le buzzer</field>
+    <statement name="STACK">
+      <block type="math_change">
+        <field name="VAR">compteurBuzzer</field>
+        <value name="DELTA">
+          <shadow type="math_number">
+            <field name="NUM">1</field>
+          </shadow>
+          <block type="variables_set_type">
+            <field name="VARIABLE_SETTYPE_TYPE">NUMBER</field>
+            <value name="VARIABLE_SETTYPE_INPUT">
+              <block type="math_number">
+                <field name="NUM">1</field>
+              </block>
+            </value>
+          </block>
+        </value>
+        <next>
+          <block type="controls_if">
+            <mutation elseif="1"></mutation>
+            <value name="IF0">
+              <block type="logic_compare">
+                <field name="OP">LT</field>
+                <value name="A">
+                  <block type="variables_get">
+                    <field name="VAR">compteurBuzzer</field>
+                  </block>
+                </value>
+                <value name="B">
+                  <block type="math_number">
+                    <field name="NUM">10</field>
+                  </block>
+                </value>
+              </block>
+            </value>
+            <statement name="DO0">
+              <block type="autoduino_piezo_buzzer">
+                <field name="PIN">7</field>
+                <value name="Frequency">
+                  <block type="math_number">
+                    <field name="NUM">800</field>
+                  </block>
+                </value>
+                <value name="Duration">
+                  <block type="math_number">
+                    <field name="NUM">100</field>
+                  </block>
+                </value>
+              </block>
+            </statement>
+            <value name="IF1">
+              <block type="logic_compare">
+                <field name="OP">LT</field>
+                <value name="A">
+                  <block type="variables_get">
+                    <field name="VAR">compteurBuzzer</field>
+                  </block>
+                </value>
+                <value name="B">
+                  <block type="math_number">
+                    <field name="NUM">60</field>
+                  </block>
+                </value>
+              </block>
+            </value>
+            <statement name="DO1">
+              <block type="variables_set">
+                <field name="VAR">compteurBuzzer</field>
+                <value name="VALUE">
+                  <block type="variables_set_type">
+                    <field name="VARIABLE_SETTYPE_TYPE">NUMBER</field>
+                    <value name="VARIABLE_SETTYPE_INPUT">
+                      <block type="math_number">
+                        <field name="NUM">0</field>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+              </block>
+            </statement>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+</xml>
